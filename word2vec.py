@@ -95,6 +95,7 @@ class word2vec():
     def train(self, training_data):
         self.w1 = np.array(getW1)
         self.w2 = np.array(getW2)
+        # 随机初始化W1和W2
         # self.w1 = np.random.uniform(-1, 1, (self.v_count, self.n))
         # self.w2 = np.random.uniform(-1, 1, (self.n, self.v_count))
         for i in range(self.epochs):
