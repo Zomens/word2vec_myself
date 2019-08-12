@@ -1,6 +1,6 @@
 import numpy as np
 
-corpus = ["natural", "language", "process", "and", "machine", "learning", "is", "fun", "and", "exciting"]
+corpus = [["natural", "language", "process", "and", "machine", "learning", "is", "fun", "and", "exciting"]]
 
 settings = {
     #上下文单词是与目标单词相邻的单词
@@ -20,17 +20,21 @@ class word2vec():
         
     def generate_training_data(self, settings, corpus):
         word_counts = defaultdict(int)
-        # 统计单词出现的
+        # 统计单词出现的次数
         for row in corpus:
             for word in row:
                 word_counts[word] += 1
-                
+        # 统计词典大小        
         self.v_count = len(word_counts.keys())
+        # 将词典的key（单词）转换成list
         self.words_list = list(word_counts.keys())
         
+        # 建立word为key，i为value的字典
         self.word_index = dict((word, i) for i, word in enumerate(self.words_list))
+        # 建立i为key，word为value的字典
         self.index_word = dict((i, word) for i, word in enumerate(self.words_list))
         
+        # 存储训练数据
         training_data = []
         # get the sentence in corpus
         for sentence in corpus:
