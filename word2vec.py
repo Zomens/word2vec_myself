@@ -86,7 +86,7 @@ class word2vec:
         # self.w1 = np.array(getW1)
         # self.w2 = np.array(getW2)
 
-        # 随机初始化W1和W2
+        # 随机初始化W1和W2 w1词典大小*embedding的维度
         self.w1 = np.random.uniform(-1, 1, (self.v_count, self.n))
         self.w2 = np.random.uniform(-1, 1, (self.n, self.v_count))
 
@@ -95,7 +95,9 @@ class word2vec:
             self.loss = 0
             # w_t = vector for target word, w_c = vector for context words
             for w_t, w_c in training_data:
+                # h = hidden layer out; u = output layer; y_pred = softmax(u)
                 y_pred, h, u = self.forward_pass(w_t)
+                # EI
                 EI = np.sum([np.subtract(y_pred, word) for word in w_c], axis=0)
                 self.backprop(EI, h, w_t)
                 self.loss += -np.sum([u[word.index(1)] for word in w_c]) + len(w_c) * np.log(np.sum(np.exp(u)))
@@ -150,7 +152,7 @@ settings = {
     "window_size": 2,
     # 这是单词嵌入(word embedding)的维度，通常其的大小通常从100到300不等，取决于词汇库的大小超过300维度会导致效益递减
     "n": 10,
-    "epochs": 100000,
+    "epochs": 500,
     "learning_rate": 0.01
 }
 
